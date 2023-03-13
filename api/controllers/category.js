@@ -14,7 +14,7 @@ exports.create_Category = (req, res) => {
         } else {
             const category = new Category({
                 _id: new mongoose.Types.ObjectId(),
-                name: reqData.name        
+                name: reqData.name
             });
             category.save()
             .then(result => {
@@ -23,10 +23,6 @@ exports.create_Category = (req, res) => {
                     insertedData: {
                         _id: result.id,
                         name: result.name,
-                        Action: {
-                            type: 'GET',
-                            url: 'http://localhost:3148/category/'
-                        }
                     }
                 });
             })
@@ -47,11 +43,7 @@ exports.get_All_Category = (req, res) => {
                 Category: docs.map(doc => {
                     return {
                         _id: doc._id,
-                        category: doc.name,
-                        Action: {
-                            type: 'GET',
-                            url: 'http://localhost:3148/category/' + doc._id
-                        }
+                        category: doc.name
                     }
                 })
             });
@@ -71,16 +63,18 @@ exports.update_Category = (req, res) => {
                 Message: 'Category name is already exist'
             })
         } else {
-            Category.findByIdAndUpdate( id, {$set: reqData})
+            Category.findByIdAndUpdate({_id: id}, {$set: reqData})
             .exec()
-            .then(results => {
+            .then(result => {
                 res.status(200).json({
-                    Message: 'Category updated'
+                    Message: 'Category updated',
+                    CategoryId: result._id,
+                    CategoryName: reqData.name
                 });
             })
             .catch(err => {
                 console.log(err);
-                res.status(500).json({error:err})
+                res.status(500).json({ Message: "CategoryId is Invalid" });
             });
         }
     })
@@ -105,13 +99,6 @@ exports.delete_Category = (req, res) => {
         })
         .catch(err => {
             console.log(err);
-            res.status(500).json({error:err})
+            res.status(500).json({ Message: "CategoryId is Invalid" });
         });
-}
-
-
-exports.get_tok = (req, res, next) => {
-    let adminId = req.adminData.adminId;
-    // console.log(adminId);
-    res.status(200).json({adminId: adminId});
 }

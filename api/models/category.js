@@ -6,4 +6,3 @@ const categorySchema = mongoose.Schema({
 },{ versionKey: false });
 
 module.exports = mongoose.model('category', categorySchema);
-                            // collection name

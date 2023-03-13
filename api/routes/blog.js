@@ -5,7 +5,6 @@ const router = express.Router();
 
 const blogController = require('../controllers/blog')
 
-// let date = new Date().toLocaleString()
 let date = new Date().toISOString()
 
 const storage = multer.diskStorage({
@@ -33,13 +32,9 @@ const uploadFile = multer({
     fileFilter: fileFilter
 });
 
-
-
 router. get('/tranding',blogController.get_Trading_Blog);
-
 router. get('/list', checkAuth, blogController.get_All_Blog);
 router.post('/add', checkAuth, uploadFile.single('blogImage'),blogController.insert_Blog);
-
 router.get('/:blogId',blogController.get_Single_Blog);
 router.patch('/:blogId',checkAuth,blogController.update_Blog);
 router.delete('/:blogId',checkAuth,blogController.delete_Blog);
