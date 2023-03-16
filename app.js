@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const app = express();
 
 app.use(morgan('dev'));
-mongoose.connect('mongodb://khushals:9m7fJ4D1b7Xpmqk9cpMI@15.206.7.200:28017/khushals?authMechanism=DEFAULT&authSource=admin')
+
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
